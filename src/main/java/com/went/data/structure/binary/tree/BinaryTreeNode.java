@@ -5,6 +5,8 @@ public class BinaryTreeNode<T extends Comparable> {
     private BinaryTreeNode left;
     private BinaryTreeNode right;
 
+    private BinaryTreeNode parent;
+
     public BinaryTreeNode(T data) {
         this.value = data;
     }
@@ -31,5 +33,17 @@ public class BinaryTreeNode<T extends Comparable> {
 
     public void setRight(BinaryTreeNode right) {
         this.right = right;
+    }
+
+    public BinaryTreeNode getParent() {
+        return parent;
+    }
+
+    public void setParent(BinaryTreeNode parent) {
+        this.parent = parent;
+    }
+
+    public boolean isLeaf() {
+        return left == null && right == null;
     }
 }

@@ -13,7 +13,7 @@ public class BstDemo {
         for (Integer i : list) {
             bst.insert(new BinaryTreeNode(i));
         }
-
+        bst.deleteOnlyNode(new BinaryTreeNode(7));
         bst.print();
     }
 }
@@ -31,16 +31,16 @@ class Bst implements BTree {
     }
 
     @Override
+    public BinaryTreeNode getRoot() {
+        return root;
+    }
+
+    @Override
     public void insert(BinaryTreeNode node) {
 
         //insertByRecursive(root, node);
 
         insertByLoop(node);
-    }
-
-    @Override
-    public void delete(BinaryTreeNode node) {
-
     }
 
     public void print() {
