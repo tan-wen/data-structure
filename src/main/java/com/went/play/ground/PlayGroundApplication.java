@@ -1,13 +1,13 @@
-package com.went.data.structure;
+package com.went.play.ground;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DataStructureApplication {
+public class PlayGroundApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DataStructureApplication.class, args);
+        SpringApplication.run(PlayGroundApplication.class, args);
     }
 
 }

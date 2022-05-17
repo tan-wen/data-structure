@@ -1,4 +1,4 @@
-package com.went.data.structure.binary.tree;
+package com.went.play.ground.binary.tree;
 
 // 二叉树 (Binary Tree)
 public interface BTree {

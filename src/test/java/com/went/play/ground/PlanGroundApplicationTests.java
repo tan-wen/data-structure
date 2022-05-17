@@ -1,10 +1,10 @@
-package com.went.data.structure;
+package com.went.play.ground;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DataStructureApplicationTests {
+class PlanGroundApplicationTests {
 
     @Test
     void contextLoads() {

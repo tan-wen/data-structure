@@ -1,4 +1,4 @@
-package com.went.data.structure.binary.tree;
+package com.went.play.ground.binary.tree;
 
 public class BinaryTreeNode<T extends Comparable> {
     private T value;
