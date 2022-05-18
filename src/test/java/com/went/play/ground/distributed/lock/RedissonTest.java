@@ -7,6 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @SpringBootTest
 public class RedissonTest {
@@ -21,6 +23,9 @@ public class RedissonTest {
     private static final String GOODS_ID = "goodsId-1";
 
     private final CountDownLatch downLatch = new CountDownLatch(BUYER_NUM);
+
+    //本地锁
+    private static final Lock LOCK = new ReentrantLock();
 
     @Autowired
     private RedissonClient redissonClient;
@@ -37,11 +42,15 @@ public class RedissonTest {
         }
     }
 
-
+    /*
+     redisson 通过 watch dog 自动续约
+     默认情况下 30s 过期，每10s 检查一次，如果存在就重新设置过期时间为30s
+     */
     class Buyer implements Runnable {
         @Override
         public void run() {
             redissonClient.getLock("goods_lock_" + GOODS_ID).lock();
+//            LOCK.lock();
             try {
                 if (goodsNum > 0) {
                     TimeUnit.SECONDS.sleep(1);
@@ -55,6 +64,7 @@ public class RedissonTest {
                 e.printStackTrace();
             } finally {
                 redissonClient.getLock("goods_lock_" + GOODS_ID).unlock();
+//                LOCK.unlock();
             }
         }
     }
