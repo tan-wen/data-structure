@@ -24,7 +24,7 @@ public class RedisConcurrentTest {
 
     private static final int MAX_THREAD_NUM = 10000;
 
-    public static final String REDIS_KEY = "redis-concurrent-test";
+    private static final String REDIS_KEY = "redis-concurrent-test";
 
     @Autowired
     private StringRedisTemplate redisTemplate;
