@@ -33,18 +33,17 @@ class Clerk3 {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if (queue.size() >= 10) {
+        while (queue.size() >= 10) {
             try {
                 wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        } else {
-            String data = ai.incrementAndGet() + "";
-            queue.add(data);
-            System.out.println("生产者线程" + Thread.currentThread().getName() + "生产了第" + data + "商品");
-            notifyAll();
         }
+        String data = ai.incrementAndGet() + "";
+        queue.add(data);
+        System.out.println("生产者线程" + Thread.currentThread().getName() + "生产了第" + data + "商品");
+        notifyAll();
     }
 
     public synchronized void getProduce() {
@@ -53,18 +52,16 @@ class Clerk3 {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if (queue.size() <= 0) {
+        while (queue.size() <= 0) {
             try {
                 wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        } else {
-            String data = queue.poll();
-            System.out.println("消费者线程" + Thread.currentThread().getName() + "消费了第" + data + "商品");
-            notifyAll();
-
         }
+        String data = queue.poll();
+        System.out.println("消费者线程" + Thread.currentThread().getName() + "消费了第" + data + "商品");
+        notifyAll();
     }
 }
 
