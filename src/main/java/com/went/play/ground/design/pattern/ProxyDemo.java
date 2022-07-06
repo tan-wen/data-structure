@@ -4,19 +4,31 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
+import net.sf.cglib.proxy.Enhancer;
+import net.sf.cglib.proxy.MethodInterceptor;
+import net.sf.cglib.proxy.MethodProxy;
+
 public class ProxyDemo {
 
     public static void main(String[] args) {
-        DanceableAndSingable actor = new Actor("韩雷");
+        
+        // JDK Proxy
+        DanceableAndSingable actor = new Actress("韩雪");
         BusinessHandler handler = new BusinessHandler(actor);
         DanceableAndSingable proxy = (DanceableAndSingable) Proxy.newProxyInstance(
             actor.getClass().getClassLoader(), 
             actor.getClass().getInterfaces(), 
             handler);
-        
         proxy.dance();
-
         proxy.sing();
+        
+        // CGLIB Proxy
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(Actor.class);
+        enhancer.setCallback(new BusinessInterceptor());
+        Actor agent = (Actor)enhancer.create(new Class[] {String.class}, new Object[] {"韩雷"});
+        agent.dance();
+        agent.sing();
     }
 
 }
@@ -73,9 +85,19 @@ class BusinessHandler implements InvocationHandler {
     }
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        System.out.println("before:先商务谈判");
+        System.out.println("jdk:先商务谈判");
         Object result = method.invoke(target, args);
-        System.out.println("after:结账");
+        System.out.println("jdk:结账");
+        return result;
+    }
+}
+
+class BusinessInterceptor implements MethodInterceptor {
+    @Override
+    public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
+        System.out.println("cglib:先商务谈判");
+        Object result = proxy.invokeSuper(obj, args);
+        System.out.println("cglib:结账");
         return result;
     }
 }
