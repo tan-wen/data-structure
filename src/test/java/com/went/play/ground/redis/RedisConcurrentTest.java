@@ -3,11 +3,13 @@ package com.went.play.ground.redis;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.Assert;
 
+import java.util.UUID;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
@@ -26,6 +28,12 @@ public class RedisConcurrentTest {
 
     private static final String REDIS_KEY = "redis-concurrent-test";
 
+    private static final String REDIS_KEY_USER_ID = "USER_ID" + UUID.randomUUID();
+
+    private static final String FOLLOWERS = "followers";
+    private static final String FOLLOWING = "following";
+
+    //springboot2.x后基于lettuce
     @Autowired
     private StringRedisTemplate redisTemplate;
 
@@ -55,5 +63,12 @@ public class RedisConcurrentTest {
         }
         downLatch.await();
         Assert.isTrue(ops.get(REDIS_KEY).equals(String.valueOf(MAX_THREAD_NUM)), "redis concurrent test failed");
+    }
+
+    @Test
+    public void testRedisHash() {
+        HashOperations<String, Object, Object> ops = redisTemplate.opsForHash();
+        ops.increment(REDIS_KEY_USER_ID, FOLLOWERS, 2);
+        ops.increment(REDIS_KEY_USER_ID, FOLLOWING, -1);
     }
 }

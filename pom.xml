@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.7</version>
+        <version>2.7.1</version>
         <relativePath/>
         <!-- lookup parent from repository -->
     </parent>
@@ -55,50 +56,62 @@
             <artifactId>cglib</artifactId>
             <version>2.2.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.clickhouse</groupId>
+            <artifactId>clickhouse-jdbc</artifactId>
+            <version>0.3.2-patch7</version>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>0.4.12</version>
-                <!--指定执行packe命令时构建镜像-->
-                <executions>
-                    <execution>
-                        <id>build-image</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <!--docker镜像相关的配置信息-->
-                <configuration>
-                    <!--镜像名，这里用工程名-->
-                    <imageName>${project.artifactId}</imageName>
-                    <!--TAG,这里用工程版本号-->
-                    <imageTags>
-                        <imageTag>${project.version}</imageTag>
-                    </imageTags>
-                    <!--镜像的FROM，使用java官方镜像-->
-                    <baseImage>java:8u111-jdk</baseImage>
-                    <!--该镜像的容器启动后，直接运行spring boot工程-->
-                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
-                    <!--构建镜像的配置信息-->
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
-                </configuration>
-            </plugin>
+            <!--            <plugin>-->
+            <!--                <groupId>org.springframework.boot</groupId>-->
+            <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--                <configuration>-->
+            <!--                    <classifier>exec</classifier>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>com.spotify</groupId>-->
+            <!--                <artifactId>docker-maven-plugin</artifactId>-->
+            <!--                <version>0.4.12</version>-->
+            <!--                &lt;!&ndash;指定执行packe命令时构建镜像&ndash;&gt;-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <id>build-image</id>-->
+            <!--                        <phase>package</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>build</goal>-->
+            <!--                        </goals>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--                &lt;!&ndash;docker镜像相关的配置信息&ndash;&gt;-->
+            <!--                <configuration>-->
+            <!--                    &lt;!&ndash;镜像名，这里用工程名&ndash;&gt;-->
+            <!--                    <imageName>${project.artifactId}</imageName>-->
+            <!--                    &lt;!&ndash;TAG,这里用工程版本号&ndash;&gt;-->
+            <!--                    <imageTags>-->
+            <!--                        <imageTag>${project.version}</imageTag>-->
+            <!--                    </imageTags>-->
+            <!--                    &lt;!&ndash;镜像的FROM，使用java官方镜像&ndash;&gt;-->
+            <!--                    <baseImage>java:8u111-jdk</baseImage>-->
+            <!--                    &lt;!&ndash;该镜像的容器启动后，直接运行spring boot工程&ndash;&gt;-->
+            <!--                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>-->
+            <!--                    &lt;!&ndash;构建镜像的配置信息&ndash;&gt;-->
+            <!--                    <resources>-->
+            <!--                        <resource>-->
+            <!--                            <targetPath>/</targetPath>-->
+            <!--                            <directory>${project.build.directory}</directory>-->
+            <!--                            <include>${project.build.finalName}.jar</include>-->
+            <!--                        </resource>-->
+            <!--                    </resources>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
         </plugins>
     </build>
 
