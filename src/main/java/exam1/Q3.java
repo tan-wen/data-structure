@@ -1,6 +1,4 @@
-package com.went.play.ground.exam1;
-
-import com.clickhouse.client.internal.google.common.collect.Lists;
+package exam1;
 
 import java.util.ArrayList;
 import java.util.Arrays;

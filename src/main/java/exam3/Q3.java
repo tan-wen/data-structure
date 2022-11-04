@@ -1,4 +1,4 @@
-package com.went.play.ground.exam2;
+package exam3;
 
 /**
  * @author White.Wen

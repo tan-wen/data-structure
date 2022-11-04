@@ -1,4 +1,4 @@
-package com.went.play.ground.exam1;
+package exam1;
 
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;

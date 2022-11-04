@@ -1,4 +1,4 @@
-package com.went.play.ground.exam3;
+package exam3;
 
 import java.util.HashMap;
 import java.util.Map;

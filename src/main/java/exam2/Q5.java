@@ -1,4 +1,4 @@
-package com.went.play.ground.exam3;
+package exam2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
